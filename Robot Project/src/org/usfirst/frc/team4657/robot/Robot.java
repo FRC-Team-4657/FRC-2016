@@ -4,11 +4,13 @@ package org.usfirst.frc.team4657.robot;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.Solenoid;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -26,12 +28,14 @@ public class Robot extends IterativeRobot {
     Double speedSelected;
     SendableChooser chooserSpeed;
 
-    
+    CameraServer server;
     RobotDrive myRobot;
     Joystick stick1;
     Joystick stick2;
 
     Talon screwTalon = new Talon(2);
+    
+    Solenoid singleSolenoid = new Solenoid(1);
 
     
 	
@@ -44,6 +48,19 @@ public class Robot extends IterativeRobot {
     	stick1 = new Joystick(0);
     	stick2 = new Joystick(1);
     	
+    	chooserSpeed = new SendableChooser();
+        chooserSpeed.addDefault("Default Speed : 0.5", defaultSpeed);
+        chooserSpeed.addObject("Speed Option : 0.25", slowerSpeed);
+        chooserSpeed.addObject("Speed Option : 0.75", fasterSpeed);
+        chooserSpeed.addObject("Speed Option : 1.0", fastestSpeed);
+        
+        
+    	server = CameraServer.getInstance();
+        server.setQuality(50);
+        //the camera name (ex "cam0") can be found through the roborio web interface
+        server.startAutomaticCapture("cam0");
+        
+        
     }
     
 	/**
@@ -68,10 +85,7 @@ public class Robot extends IterativeRobot {
     }
     
     public void telepoInit() {
-        chooserSpeed.addDefault("Default Speed : 0.5", defaultSpeed);
-        chooserSpeed.addObject("Speed Option : 0.25", slowerSpeed);
-        chooserSpeed.addObject("Speed Option : 0.75", fasterSpeed);
-        chooserSpeed.addObject("Speed Option : 1.0", fastestSpeed);
+
         
         //speedSelected = (Double) chooserSpeed.getSelected();
         //System.out.println("Speed Selected: " + Double.toString(speedSelected));
@@ -97,10 +111,27 @@ public class Robot extends IterativeRobot {
     	if (stick1.getTrigger() == true){
     		screwTalon.set(speedSelected);
     	}
+    	else if (stick1.getTrigger() == false){
+    		screwTalon.set(0);
+    	}
     	else if (stick2.getTrigger() == true){
     		screwTalon.set(-speedSelected);
     	}
+    	else if (stick2.getTrigger() == false){
+    		screwTalon.set(0);
+    	}
     	
+    	if (stick1.getTop() == true || stick2.getTop() == true){
+    		singleSolenoid.set(true);
+    	}
+    	else {
+    		singleSolenoid.set(false);
+    	}
+    	
+    	
+   
+    	
+    	Timer.delay(0.005);		// wait for a motor update time
     }
     
     /**
