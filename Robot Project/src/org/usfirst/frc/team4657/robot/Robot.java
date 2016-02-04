@@ -121,7 +121,7 @@ public class Robot extends IterativeRobot {
     		screwTalon.set(0);
     	}
     	
-    	if (stick1.getTop() == true || stick2.getTop() == true){
+    	if (stick1.getRawButton(3) == true || stick2.getRawButton(3) == true){
     		singleSolenoid.set(true);
     	}
     	else {
