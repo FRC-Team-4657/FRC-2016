@@ -11,6 +11,9 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.Compressor;
+
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -27,6 +30,8 @@ public class Robot extends IterativeRobot {
     final Double fastestSpeed = 1.0;
     Double speedSelected;
     SendableChooser chooserSpeed;
+    
+    Compressor aCompressor;
 
     CameraServer server;
     RobotDrive myRobot;
@@ -35,7 +40,7 @@ public class Robot extends IterativeRobot {
 
     Talon screwTalon = new Talon(2);
     
-    Solenoid singleSolenoid = new Solenoid(1);
+    Solenoid singleSolenoid = new Solenoid(0);
 
     
 	
@@ -48,18 +53,22 @@ public class Robot extends IterativeRobot {
     	stick1 = new Joystick(0);
     	stick2 = new Joystick(1);
     	
+    	/*
     	chooserSpeed = new SendableChooser();
         chooserSpeed.addDefault("Default Speed : 0.5", defaultSpeed);
         chooserSpeed.addObject("Speed Option : 0.25", slowerSpeed);
         chooserSpeed.addObject("Speed Option : 0.75", fasterSpeed);
         chooserSpeed.addObject("Speed Option : 1.0", fastestSpeed);
-        
+        */
         
     	server = CameraServer.getInstance();
         server.setQuality(50);
         //the camera name (ex "cam0") can be found through the roborio web interface
         server.startAutomaticCapture("cam0");
         
+        Compressor aCompressor = new Compressor(0); //create a compressor with the default slots and relay and pressure switch channels 1 and 1.
+    	aCompressor.start();
+
         
     }
     
@@ -89,8 +98,17 @@ public class Robot extends IterativeRobot {
         
         //speedSelected = (Double) chooserSpeed.getSelected();
         //System.out.println("Speed Selected: " + Double.toString(speedSelected));
+    	
+    	/*
+    	chooserSpeed = new SendableChooser();
+        chooserSpeed.addDefault("Default Speed : 0.5", defaultSpeed);
+        chooserSpeed.addObject("Speed Option : 0.25", slowerSpeed);
+        chooserSpeed.addObject("Speed Option : 0.75", fasterSpeed);
+        chooserSpeed.addObject("Speed Option : 1.0", fastestSpeed);
         
-        
+        System.out.println("The Computer Lives");
+        */
+
     }
 
     /**
@@ -101,8 +119,12 @@ public class Robot extends IterativeRobot {
     	
     		
 
-    	speedSelected = (Double) chooserSpeed.getSelected();
-        SmartDashboard.putNumber("Speed Selected: ", speedSelected);
+    	//speedSelected = (Double) chooserSpeed.getSelected();
+    	speedSelected = 1.0;
+    	//if (speedSelected == null){
+    	//	speedSelected = 0.5;
+    	//}
+        //SmartDashboard.putNumber("Speed Selected: ", speedSelected);
     	SmartDashboard.putBoolean("Left Trigger Enagaged: ", stick1.getTrigger());
     	SmartDashboard.putBoolean("Right Trigger Enagaged: ", stick2.getTrigger());
     	
@@ -111,11 +133,12 @@ public class Robot extends IterativeRobot {
     	if (stick1.getTrigger() == true){
     		screwTalon.set(speedSelected);
     	}
-    	else if (stick1.getTrigger() == false){
-    		screwTalon.set(0);
-    	}
+    	
     	else if (stick2.getTrigger() == true){
     		screwTalon.set(-speedSelected);
+    	}
+    	else if (stick1.getTrigger() == false){
+    		screwTalon.set(0);
     	}
     	else if (stick2.getTrigger() == false){
     		screwTalon.set(0);
