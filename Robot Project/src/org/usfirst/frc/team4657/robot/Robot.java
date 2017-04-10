@@ -38,7 +38,10 @@ public class Robot extends IterativeRobot {
     Joystick stick1;
     Joystick stick2;
 
+    boolean screwed;
+
     Talon screwTalon = new Talon(2);
+    Talon ballTalon = new Talon(3)
     
     Solenoid singleSolenoid = new Solenoid(0);
 
@@ -52,6 +55,7 @@ public class Robot extends IterativeRobot {
         myRobot = new RobotDrive(0,1);
     	stick1 = new Joystick(0);
     	stick2 = new Joystick(1);
+
     	
     	/*
     	chooserSpeed = new SendableChooser();
@@ -60,14 +64,13 @@ public class Robot extends IterativeRobot {
         chooserSpeed.addObject("Speed Option : 0.75", fasterSpeed);
         chooserSpeed.addObject("Speed Option : 1.0", fastestSpeed);
         */
-        
+        /*
     	server = CameraServer.getInstance();
         server.setQuality(50);
         //the camera name (ex "cam0") can be found through the roborio web interface
         server.startAutomaticCapture("cam0");
-        
-        Compressor aCompressor = new Compressor(0); //create a compressor with the default slots and relay and pressure switch channels 1 and 1.
-    	aCompressor.start();
+        */
+
 
         
     }
@@ -96,19 +99,7 @@ public class Robot extends IterativeRobot {
     public void telepoInit() {
 
         
-        //speedSelected = (Double) chooserSpeed.getSelected();
-        //System.out.println("Speed Selected: " + Double.toString(speedSelected));
-    	
-    	/*
-    	chooserSpeed = new SendableChooser();
-        chooserSpeed.addDefault("Default Speed : 0.5", defaultSpeed);
-        chooserSpeed.addObject("Speed Option : 0.25", slowerSpeed);
-        chooserSpeed.addObject("Speed Option : 0.75", fasterSpeed);
-        chooserSpeed.addObject("Speed Option : 1.0", fastestSpeed);
-        
-        System.out.println("The Computer Lives");
-        */
-
+   
     }
 
     /**
@@ -121,6 +112,7 @@ public class Robot extends IterativeRobot {
 
     	//speedSelected = (Double) chooserSpeed.getSelected();
     	speedSelected = 1.0;
+        speedSelected1 = 1.0;
     	//if (speedSelected == null){
     	//	speedSelected = 0.5;
     	//}
@@ -131,31 +123,28 @@ public class Robot extends IterativeRobot {
     	
     	
     	if (stick1.getTrigger() == true){
-    		screwTalon.set(speedSelected);
-    	}
-    	
-    	else if (stick2.getTrigger() == true){
-    		screwTalon.set(-speedSelected);
-    	}
-    	else if (stick1.getTrigger() == false){
-    		screwTalon.set(0);
-    	}
-    	else if (stick2.getTrigger() == false){
-    		screwTalon.set(0);
-    	}
-    	
-    	if (stick1.getRawButton(3) == true || stick2.getRawButton(3) == true){
-    		singleSolenoid.set(true);
-    	}
-    	else {
-    		singleSolenoid.set(false);
-    	}
-    	
-    	
-   
-    	
-    	Timer.delay(0.005);		// wait for a motor update time
-    }
+    		screwTalon.set(speedSelected); 	
+    	   Timer.delay(0.005);		// wait for a motor update time
+        }
+
+        if (stick1.getTrigger() == false){
+            screwTalon.set(0.0);  
+           Timer.delay(0.005);      // wait for a motor update time
+        }
+
+
+        if (stick2.getTrigger() == true){
+            ballTalon.set(speedSelected1);  
+           Timer.delay(0.005);      // wait for a motor update time
+        }
+        if (stick2.getTrigger() == false){
+            ballTalon.set(0.0);  
+           Timer.delay(0.005);      // wait for a motor update time
+        }
+
+
+
+}
     
     /**
      * This function is called periodically during test mode
@@ -165,3 +154,4 @@ public class Robot extends IterativeRobot {
     }
     
 }
+
