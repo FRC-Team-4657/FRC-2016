@@ -4,6 +4,7 @@ package org.usfirst.frc.team4657.robot;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.RobotDrive.MotorType;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -23,16 +24,13 @@ import edu.wpi.first.wpilibj.Compressor;
  * directory.
  */
 public class Robot extends IterativeRobot {
-<<<<<<< HEAD
+
 	Double SpeedSelected;
 	Double SpeedSelected1;
    
-=======
-
 
     Double speedSelected;
     Double speedSelected1;
->>>>>>> origin/master
     
 
     CameraServer server;
@@ -41,26 +39,25 @@ public class Robot extends IterativeRobot {
     Joystick stick2;
 
     boolean screwed;
-    Talon leftTalon = new Talon(0);
-    Talon rightTalon = new Talon(1);
-    Talon screwTalon = new Talon(2);
-    Talon ballTalon = new Talon(3);
-<<<<<<< HEAD
+   	Talon leftTalon = new Talon(0);
+	Talon rightTalon = new Talon(1);
+	Talon screwTalon = new Talon(2);
+	Talon ballTalon = new Talon(3);
+   
     
-    Solenoid singleSolenoid = new Solenoid(0);
-=======
->>>>>>> origin/master
+	double Counter = 0.0;
 
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {    
+
         myRobot = new RobotDrive(leftTalon,rightTalon);
     	stick1 = new Joystick(0);
     	stick2 = new Joystick(1);
-        drive.SetInvertedMotor(myRobot.leftTalon, true);
-        drive.SetInvertedMotor(myRobot.rightTalon, true);
+    	myRobot.setInvertedMotor(MotorType.kFrontLeft, true);
+        myRobot.setInvertedMotor(MotorType.kFrontRight, true);
 
     	
     	/*
@@ -91,6 +88,7 @@ public class Robot extends IterativeRobot {
 	 * If using the SendableChooser make sure to add them to the chooser code above as well.
 	 */
     public void autonomousInit() {
+    	
 
     }
     	
@@ -98,11 +96,17 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
+    	while(Counter < 100){
+    		myRobot.tankDrive(1.0,1.0);
+    		
+    	}
+    	myRobot.tankDrive(stick1, stick2);
+
   
     	
     }
     
-    public void telepoInit() {
+    public void teleopInit() {
 
         
    
@@ -113,48 +117,6 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
     	myRobot.tankDrive(stick1, stick2);
-
-
-    	//speedSelected = (Double) chooserSpeed.getSelected();
-    	//speedSelected = 1.0;
-        //speedSelected1 = 1.0;
-    	//if (speedSelected == null){
-    	//	speedSelected = 0.5;
-    	//}
-        //SmartDashboard.putNumber("Speed Selected: ", speedSelected);
-<<<<<<< HEAD
-    	/*
-    	
-=======
-
-    	/*
->>>>>>> origin/master
-    	if (stick1.getTrigger() == true){
-    		screwTalon.set(speedSelected); 	
-    	   Timer.delay(0.005);		// wait for a motor update time
-        }
-
-        if (stick1.getTrigger() == false){
-            screwTalon.set(0.0);  
-           Timer.delay(0.005);      // wait for a motor update time
-        }
-
-
-        if (stick2.getTrigger() == true){
-            ballTalon.set(speedSelected1);  
-           Timer.delay(0.005);      // wait for a motor update time
-        }
-        if (stick2.getTrigger() == false){
-            ballTalon.set(0.0);  
-           Timer.delay(0.005);      // wait for a motor update time
-        }
-
-<<<<<<< HEAD
-		*/
-=======
-        */
->>>>>>> origin/master
-
 }
     
     /**
