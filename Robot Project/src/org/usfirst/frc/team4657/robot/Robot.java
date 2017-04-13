@@ -23,13 +23,9 @@ import edu.wpi.first.wpilibj.Compressor;
  * directory.
  */
 public class Robot extends IterativeRobot {
-
-    final Double defaultSpeed = 0.5;
-    final Double slowerSpeed = 0.25;
-    final Double fasterSpeed = 0.75;
-    final Double fastestSpeed = 1.0;
-    Double speedSelected;
-    SendableChooser chooserSpeed;
+	Double SpeedSelected;
+	Double SpeedSelected1;
+   
     
     Compressor aCompressor;
 
@@ -41,7 +37,7 @@ public class Robot extends IterativeRobot {
     boolean screwed;
 
     Talon screwTalon = new Talon(2);
-    Talon ballTalon = new Talon(3)
+    Talon ballTalon = new Talon(3);
     
     Solenoid singleSolenoid = new Solenoid(0);
 
@@ -111,16 +107,13 @@ public class Robot extends IterativeRobot {
     		
 
     	//speedSelected = (Double) chooserSpeed.getSelected();
-    	speedSelected = 1.0;
-        speedSelected1 = 1.0;
+    	//speedSelected = 1.0;
+        //speedSelected1 = 1.0;
     	//if (speedSelected == null){
     	//	speedSelected = 0.5;
     	//}
         //SmartDashboard.putNumber("Speed Selected: ", speedSelected);
-    	SmartDashboard.putBoolean("Left Trigger Enagaged: ", stick1.getTrigger());
-    	SmartDashboard.putBoolean("Right Trigger Enagaged: ", stick2.getTrigger());
-    	
-    	
+    	/*
     	
     	if (stick1.getTrigger() == true){
     		screwTalon.set(speedSelected); 	
@@ -142,7 +135,7 @@ public class Robot extends IterativeRobot {
            Timer.delay(0.005);      // wait for a motor update time
         }
 
-
+		*/
 
 }
     
