@@ -23,11 +23,17 @@ import edu.wpi.first.wpilibj.Compressor;
  * directory.
  */
 public class Robot extends IterativeRobot {
+<<<<<<< HEAD
 	Double SpeedSelected;
 	Double SpeedSelected1;
    
+=======
+
+
+    Double speedSelected;
+    Double speedSelected1;
+>>>>>>> origin/master
     
-    Compressor aCompressor;
 
     CameraServer server;
     RobotDrive myRobot;
@@ -35,22 +41,26 @@ public class Robot extends IterativeRobot {
     Joystick stick2;
 
     boolean screwed;
-
+    Talon leftTalon = new Talon(0);
+    Talon rightTalon = new Talon(1);
     Talon screwTalon = new Talon(2);
     Talon ballTalon = new Talon(3);
+<<<<<<< HEAD
     
     Solenoid singleSolenoid = new Solenoid(0);
+=======
+>>>>>>> origin/master
 
-    
-	
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {    
-        myRobot = new RobotDrive(0,1);
+        myRobot = new RobotDrive(leftTalon,rightTalon);
     	stick1 = new Joystick(0);
     	stick2 = new Joystick(1);
+        drive.SetInvertedMotor(myRobot.leftTalon, true);
+        drive.SetInvertedMotor(myRobot.rightTalon, true);
 
     	
     	/*
@@ -103,8 +113,7 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
     	myRobot.tankDrive(stick1, stick2);
-    	
-    		
+
 
     	//speedSelected = (Double) chooserSpeed.getSelected();
     	//speedSelected = 1.0;
@@ -113,8 +122,13 @@ public class Robot extends IterativeRobot {
     	//	speedSelected = 0.5;
     	//}
         //SmartDashboard.putNumber("Speed Selected: ", speedSelected);
+<<<<<<< HEAD
     	/*
     	
+=======
+
+    	/*
+>>>>>>> origin/master
     	if (stick1.getTrigger() == true){
     		screwTalon.set(speedSelected); 	
     	   Timer.delay(0.005);		// wait for a motor update time
@@ -135,7 +149,11 @@ public class Robot extends IterativeRobot {
            Timer.delay(0.005);      // wait for a motor update time
         }
 
+<<<<<<< HEAD
 		*/
+=======
+        */
+>>>>>>> origin/master
 
 }
     
